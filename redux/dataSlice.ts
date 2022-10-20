@@ -40,7 +40,7 @@ interface OptionShape {
 const initialState: DataShape = {
     dataLoading : false,
     farmersList : [],
-    rsbsaStep : 1,
+    rsbsaStep : 0,
     step1Data : {
         rsbsaFirstName: '',
         rsbsaLastName : '',
