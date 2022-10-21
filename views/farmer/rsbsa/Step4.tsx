@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import NextButton from '../../../components/RSBSAButton'
 import PreviousButton from '../../../components/RSBSASecondaryButton'
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks'
-import { onPrevStep, onUploadFile, onRemoveFile } from '../../../redux/dataSlice'
+import { onPrevStep, onUploadFile, onRemoveFile, updateAccount } from '../../../redux/dataSlice'
 import { useDropzone } from 'react-dropzone'
 
 const Step4 = () => {
@@ -67,6 +67,9 @@ const Step4 = () => {
         dispatch(onRemoveFile('signatureName'))
     }
 
+    const handleSubmitRSBSA = () => {
+        dispatch(updateAccount())
+    }
     return (
         <div className="w-[700px] flex flex-col gap-y-5">
             {/*  */}
@@ -126,7 +129,7 @@ const Step4 = () => {
             { 
                 signatureName.length ?  
                 <div className="relative bg-gray-100 border-2 border-dashed border-gray-400 h-48 rounded-lg flex justify-center items-center">
-                    <button type="button" onClick={ handleRemoveDocument }>
+                    <button type="button" onClick={ handleRemoveSignature }>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="absolute h-6 w-6 top-5 right-5 text-red-500"
@@ -180,7 +183,7 @@ const Step4 = () => {
                 />
                 <NextButton 
                     buttonText="Submit"
-                    onClickButton={ () => console.log('Gwapo ko!') }
+                    onClickButton={ handleSubmitRSBSA }
                 />
             </div>
         </div>

@@ -26,8 +26,9 @@ const CommonSelectField = ({ myControl, myOptions, fieldName, fieldLabel, fieldR
                         id={ fieldName }
                         className={`w-full bg-gray-100 border-2 border-transparent focus:outline-none focus:border-[#89644e] px-2 py-1 rounded-md appearance-none`}
                         onChange={ onChange }
+                        defaultValue=""
                     >
-                        <option disabled selected></option>
+                        <option disabled value=""></option>
                         { myOptions.map((option: any) => {
                             return (
                                 <option value={ option.value }>{ option.label }</option>

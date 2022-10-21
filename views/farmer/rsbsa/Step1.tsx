@@ -5,16 +5,16 @@ import CommonSelectField from '../../../components/CommonSelect'
 import { fieldRules } from '../../../components/authHelper'
 import NextButton from '../../../components/RSBSAButton'
 import { useAppDispatch } from '../../../redux/hooks'
-import { onNextStep } from '../../../redux/dataSlice'
+import { onSubmitRSBSAStep1 } from '../../../redux/dataSlice'
 
 const Step1 = () => {
 
     const dispatch = useAppDispatch()
     const { handleSubmit, control } = useForm()
 
-    const onSubmitRSBSAStep1 = (formData: any) => {
+    const onSubmiStep1 = (formData: any) => {
         console.log('RSBSA Step 1: ', formData)
-        dispatch(onNextStep())
+        dispatch(onSubmitRSBSAStep1(formData))
     }
 
     return (
@@ -46,7 +46,7 @@ const Step1 = () => {
                         fieldType="text"
                         fieldName="rsbsaExtension"
                         fieldLabel="Extension"
-                        fieldRules={ fieldRules.requiredStringRule }
+                        fieldRules=""
                         defaultValue=""
                     />
                     <CommonSelectField 
@@ -78,7 +78,7 @@ const Step1 = () => {
                         fieldType="date"
                         fieldName="rsbsaDateOfBirth"
                         fieldLabel="Date of Birth"
-                        fieldRules={ fieldRules.requiredStringRule }
+                        fieldRules={ fieldRules.requiredRule }
                         defaultValue=""
                     />
                     <CommonInputField 
@@ -164,7 +164,7 @@ const Step1 = () => {
                 <div></div>
                 <NextButton 
                     buttonText="Next"
-                    onClickButton={ handleSubmit(onSubmitRSBSAStep1) }
+                    onClickButton={ handleSubmit(onSubmiStep1) }
                 />
             </div>
         </form>

@@ -88,7 +88,7 @@ export const updateAccount = createAsyncThunk(
             first_name : state.dataState.step1Data.rsbsaFirstName,
             last_name : state.dataState.step1Data.rsbsaLastName,
             enrollment_type : "",
-            date_administered : `${mm}/${dd}/${yyyy}`,
+            date_administered : `${yyyy}-${mm}-${dd}`,
             extension : state.dataState.step1Data.rsbsaExtension,
             sex : state.dataState.step1Data.rsbsaSex,
             date_of_birth : state.dataState.step1Data.rsbsaDateOfBirth,
@@ -124,7 +124,20 @@ const dataSlice = createSlice({
             return { ...state, rsbsaStep : step - 1 }
         },
         onSubmitRSBSAStep1 : (state, action) => {
-            return
+            const { payload } = action
+            const prevState: any = { ...state.step1Data }
+            
+            for (let obj in payload) {
+                prevState[obj] = payload[obj]
+            }
+
+            console.log('Fvcking previous state: ', prevState)
+
+            return {
+                ...state, 
+                step1Data : prevState,
+                rsbsaStep : 1,
+            }
         },
         onSelectLivelihood : (state, action) => {
             return { ...state, selectedLivelihood : action.payload }
@@ -157,8 +170,8 @@ const dataSlice = createSlice({
         builder.addCase(updateAccount.pending, (state) => {
             return { ...state, dataLoading : true }
         })
-        builder.addCase(updateAccount.fulfilled, (state) => {
-            return { ...state, dataLoading : false }
+        builder.addCase(updateAccount.fulfilled, () => {
+            return initialState
         })
         builder.addCase(updateAccount.rejected, (state) => {
             return { ...state, dataLoading : false }
