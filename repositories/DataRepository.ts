@@ -9,11 +9,19 @@ export default class DataRepository {
         return farmerListRes.data.results
     }
     async UpdateAccount(formData: any): Promise<any> {
-        console.log('This is the fvcking token', localStorage.getItem("jwt_token"))
-        const updateAccountRes = await backendConn.post('account/update', formData, {
+        const res = await backendConn.post(`account/update`, formData, {
             headers : { Authorization : `Bearer ${localStorage.getItem("jwt_token")}` }
         })
-        console.log('Update account res:', updateAccountRes)
-        return updateAccountRes
+        console.log('Update account res:', res)
+        return res.data
+    }
+    async DeleteAccount(account_id: number) {
+        const res = await backendConn.delete(`account/delete/${account_id}`, {
+            headers : {
+                Authorization : `Bearer ${ localStorage.getItem("jwt_token") }`
+            }
+        })
+        console.log('Delete account res:', res)
+        return res.data
     }
 }

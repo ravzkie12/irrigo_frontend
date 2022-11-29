@@ -66,6 +66,8 @@ const initialState: DataShape = {
     signature : "",
 }
 
+
+// ACCOUNT THUNKS
 export const getFarmers = createAsyncThunk(
     'data/getFarmers',
     async () => {
@@ -78,7 +80,7 @@ export const getFarmers = createAsyncThunk(
 
 export const updateAccount = createAsyncThunk(
     'data/updateAccount',
-    async (arg, { getState }) => {
+    async (args, { getState }) => {
         const state: any = getState()
         let today = new Date();
         let dd = String(today.getDate()).padStart(2, '0');
@@ -99,15 +101,25 @@ export const updateAccount = createAsyncThunk(
             is_4ps_beneficiary : state.dataState.step1Data.rsbsaIs4ps,
             is_ip : state.dataState.step1Data.rsbsaIsIP,
             main_livelihood : state.dataState.selectedLivelihood,
-            livelihood_product : state.dataState.livelihoodProduct,
             laborer_activity : state.dataState.workerActivity,
             fishing_activity : state.dataState.fishingActivity,
             involvement_type : state.dataState.involvementType,
+            livelihood_product : state.dataState.livelihoodProduct,
+            ownership_document_name : state.dataState.ownershipDocumentName,
             ownership_document : state.dataState.ownershipDocument,
+            signature_name : state.dataState.signatureName,
             signature : state.dataState.signature
         }
         const dataRepo = new DataRepository()
         await dataRepo.UpdateAccount(formData)
+    }
+)
+
+export const deleteAccount = createAsyncThunk(
+    'data/deleteAccount',
+    async (account_id: number) => {
+        const dataRepo = new DataRepository()
+        await dataRepo.DeleteAccount(account_id)
     }
 )
 
@@ -166,7 +178,6 @@ const dataSlice = createSlice({
             return { ...state, dataLoading : false }
         })
         // UPDATE FARMER ACCOUNT
-        // FETCH ALL FARMERS
         builder.addCase(updateAccount.pending, (state) => {
             return { ...state, dataLoading : true }
         })
@@ -175,6 +186,16 @@ const dataSlice = createSlice({
         })
         builder.addCase(updateAccount.rejected, (state) => {
             return { ...state, dataLoading : false }
+        })
+        // DELETE FARMER ACCOUNT
+        builder.addCase(deleteAccount.pending, (state) => {
+            return { ...state, dataLoading : true  }
+        })
+        builder.addCase(deleteAccount.fulfilled, (state) => {
+            return { ...state, dataLoading : false  }
+        })
+        builder.addCase(deleteAccount.rejected, (state) => {
+            return { ...state, dataLoading : false  }
         })
     }
 })
