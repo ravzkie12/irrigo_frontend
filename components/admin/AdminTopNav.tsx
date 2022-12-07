@@ -22,7 +22,7 @@ const AdminTopNav = () => {
 				{({ open }) => (
 					<>
 						<Popover.Button className="p-3">
-							<Popover.Button className="flex items-center gap-x-1">
+							<div className="flex items-center gap-x-1">
 								<p className="text-sm font-noto">{userProfile.email}</p>
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@ const AdminTopNav = () => {
 										clipRule="evenodd"
 									/>
 								</svg>
-							</Popover.Button>
+							</div>
 						</Popover.Button>
 						<Transition
 							as={Fragment}

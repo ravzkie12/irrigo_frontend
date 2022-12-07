@@ -30,6 +30,11 @@ interface DataShape {
     signatureName: string;
     ownershipDocument: string;
     signature: string;
+    ubidotsData: any;
+    moistureOptions: any;
+    moistureSeries: any;
+    heatOptions: any;
+    heatSeries: any;
 }
 
 interface OptionShape {
@@ -64,6 +69,11 @@ const initialState: DataShape = {
     signatureName : "",
     ownershipDocument : "",
     signature : "",
+    ubidotsData : [],
+    moistureOptions : {},
+    moistureSeries : [],
+    heatOptions : {},
+    heatSeries : []
 }
 
 
@@ -120,6 +130,14 @@ export const deleteAccount = createAsyncThunk(
     async (account_id: number) => {
         const dataRepo = new DataRepository()
         await dataRepo.DeleteAccount(account_id)
+    }
+)
+
+export const getUbidotsData = createAsyncThunk(
+    'data/getUbidotsData',
+    async () => {
+        const dataRepo = new DataRepository()
+        return await dataRepo.GetUbidotsData()
     }
 )
 
@@ -195,6 +213,88 @@ const dataSlice = createSlice({
             return { ...state, dataLoading : false  }
         })
         builder.addCase(deleteAccount.rejected, (state) => {
+            return { ...state, dataLoading : false  }
+        })
+        // GET UBIDOTS DATA
+        builder.addCase(getUbidotsData.pending, (state) => {
+            return { ...state, dataLoading : true  }
+        })
+        builder.addCase(getUbidotsData.fulfilled, (state, action) => {
+            const { payload } = action
+            const optionCategories = payload.map((data: any) => {
+                const data_date = new Date(data.created_at)
+                return `${data_date.getMonth()+1}-${data_date.getDate()}-${data_date.getFullYear()}`;
+                // return data_date.getDate();
+            })
+            const series = payload.map((data: any) => {
+                return data.value
+            })
+            return { 
+                ...state, 
+                dataLoading : false, 
+                ubidotsData : payload,
+                moistureOptions : {
+                    chart: {
+                        id: "customBarChart",
+                    },
+                    xaxis: {
+                        categories : optionCategories.slice(0, 5)
+                    },
+                    stroke: {
+                        show: true,
+                        width: 5,
+                    },
+                    fill: {
+                        opacity: 0.5,
+                    },
+                },
+                moistureSeries : [
+                    {
+                        data : series.slice(0, 4)
+                    },
+                    {
+                        data : series.slice(4, 8)
+                    },
+                    {
+                        data : series.slice(8, 12)
+                    },
+                    {
+                        data : series.slice(12, 15)
+                    },
+                ],
+                heatOptions : {
+                    chart: {
+                        id: "customAreaChart"
+                    },
+                    xaxis: {
+                        type: 'category',
+                        categories: optionCategories.slice(0, 5)
+                    },
+                    stroke: {
+                        show: true,
+                        width: 5,
+                    },
+                    fill: {
+                        opacity: 0.5,
+                    },
+                },
+                heatSeries : [
+                    {
+                        data : series.slice(0, 10)
+                    },
+                    {
+                        data : series.slice(10, 20)
+                    },
+                    {
+                        data : series.slice(20, 30)
+                    },
+                    {
+                        data : series.slice(30, 40)
+                    },
+                ]
+            }
+        })
+        builder.addCase(getUbidotsData.rejected, (state) => {
             return { ...state, dataLoading : false  }
         })
     }

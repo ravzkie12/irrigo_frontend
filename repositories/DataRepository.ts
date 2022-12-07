@@ -1,4 +1,4 @@
-import { backendConn } from "./connection";
+import { backendConn, ubidotsConn } from "./connection";
 
 export default class DataRepository {
     async GetFarmersList(): Promise<any> {
@@ -23,5 +23,15 @@ export default class DataRepository {
         })
         console.log('Delete account res:', res)
         return res.data
+    }
+    async GetUbidotsData() {
+        const res = await ubidotsConn.get("api/v1.6/variables/63895ef612ae6e000c6e86ec/values/", {
+            headers : {
+                "X-Auth-Token" : "BBFF-73davCyhhqtp7eIcDLWxTEMcWhK7Bz",
+                "Content-Type" : "application/json"
+            }
+        })
+        console.log('Get ubidots response: ', res.data)
+        return res.data.results
     }
 }
