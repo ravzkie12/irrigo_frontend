@@ -34,6 +34,7 @@ const CommonInputField = ({
 				<div className="flex flex-col gap-y-1">
 					<label className="text-sm font-medium tracking-wider">
 						{fieldLabel}
+						{fieldRules ? <span className="text-rose-500 pl-1">*</span> : null}
 					</label>
 					<input
 						type={fieldType}

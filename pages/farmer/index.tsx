@@ -1,13 +1,6 @@
-import React from "react";
-import dynamic from "next/dynamic";
+import React from 'react'
+import RSBSAView from '../../views/farmer/rsbsa/RSBSAView'
 
-const NoSSRDashboard = dynamic(
-	() => import("../../views/farmer/DashboardView"),
-	{
-		ssr: false,
-	}
-);
-
-export default function index() {
-	return <NoSSRDashboard />;
+export default function rsbsa() {
+    return <RSBSAView />
 }
