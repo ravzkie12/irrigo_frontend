@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "react-apexcharts";
 
 const chartOptions: any = {
-	labels: ["Dry", "Moderate", "Wet"],
+	labels: ["Ripening", "Reproductive", "Vegetative"],
 	colors: ["#F7C69B", "#67493C", "#7A6149"],
 	fill: {
 		type: "image",
@@ -14,7 +14,7 @@ const chartOptions: any = {
 		},
 	},
 };
-const chartSeries = [20, 15, 65];
+const chartSeries = [15, 20, 65];
 
 const DasboardView = () => {
 	return (

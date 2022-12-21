@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Chart from "react-apexcharts";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUbidotsData } from "../../redux/dataSlice";
+import { BeatLoader } from "react-spinners";
 // import { ubidotsConn } from "../../repositories/connection";
 
 // const chartOptions = {
@@ -42,7 +43,7 @@ import { getUbidotsData } from "../../redux/dataSlice";
 
 const MoistureView = () => {
 	const dispatch = useAppDispatch();
-	const { ubidotsData, moistureOptions, moistureSeries } = useAppSelector(
+	const { dataLoading, moistureOptions, moistureSeries } = useAppSelector(
 		(state) => state.dataState
 	);
 

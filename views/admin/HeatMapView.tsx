@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Chart from "react-apexcharts";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUbidotsData } from "../../redux/dataSlice";
+import { BeatLoader } from "react-spinners";
 
 const chartOptions = {
 	chart: {
@@ -20,7 +21,7 @@ const chartOptions = {
 
 const HeatMapView = () => {
 	const dispatch = useAppDispatch();
-	const { heatOptions, heatSeries } = useAppSelector(
+	const { dataLoading, heatOptions, heatSeries } = useAppSelector(
 		(state) => state.dataState
 	);
 

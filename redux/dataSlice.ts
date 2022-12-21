@@ -137,7 +137,15 @@ export const getUbidotsData = createAsyncThunk(
     'data/getUbidotsData',
     async () => {
         const dataRepo = new DataRepository()
-        return await dataRepo.GetUbidotsData()
+        const ubidotsData =  await dataRepo.GetUbidotsData()
+        const optionCategories = ubidotsData.map((data: any) => {
+            const data_date = new Date(data.created_at)
+            return `${data_date.getMonth()+1}-${data_date.getDate()}-${data_date.getFullYear()}`;
+        })
+        const series = ubidotsData.map((data: any) => {
+            return data.value
+        })
+        return { optionCategories, series }
     }
 )
 
@@ -220,25 +228,19 @@ const dataSlice = createSlice({
             return { ...state, dataLoading : true  }
         })
         builder.addCase(getUbidotsData.fulfilled, (state, action) => {
-            const { payload } = action
-            const optionCategories = payload.map((data: any) => {
-                const data_date = new Date(data.created_at)
-                return `${data_date.getMonth()+1}-${data_date.getDate()}-${data_date.getFullYear()}`;
-                // return data_date.getDate();
-            })
-            const series = payload.map((data: any) => {
-                return data.value
-            })
+            const { payload }: any = action
+            
             return { 
                 ...state, 
                 dataLoading : false, 
                 ubidotsData : payload,
                 moistureOptions : {
+                    labels: ["Ripening", "Reproductive", "Vegetative"],
                     chart: {
                         id: "customBarChart",
                     },
                     xaxis: {
-                        categories : optionCategories.slice(0, 5)
+                        categories : payload.optionCategories.slice(0, 5)
                     },
                     stroke: {
                         show: true,
@@ -250,25 +252,26 @@ const dataSlice = createSlice({
                 },
                 moistureSeries : [
                     {
-                        data : series.slice(0, 4)
+                        data : payload.series.slice(0, 4)
                     },
                     {
-                        data : series.slice(4, 8)
+                        data : payload.series.slice(4, 8)
                     },
                     {
-                        data : series.slice(8, 12)
+                        data : payload.series.slice(8, 12)
                     },
                     {
-                        data : series.slice(12, 15)
+                        data : payload.series.slice(12, 15)
                     },
                 ],
                 heatOptions : {
+                    labels: ["Ripening", "Reproductive", "Vegetative"],
                     chart: {
                         id: "customAreaChart"
                     },
                     xaxis: {
                         type: 'category',
-                        categories: optionCategories.slice(0, 5)
+                        categories: payload.optionCategories.slice(0, 5)
                     },
                     stroke: {
                         show: true,
@@ -280,16 +283,16 @@ const dataSlice = createSlice({
                 },
                 heatSeries : [
                     {
-                        data : series.slice(0, 10)
+                        data : payload.series.slice(0, 10)
                     },
                     {
-                        data : series.slice(10, 20)
+                        data : payload.series.slice(10, 20)
                     },
                     {
-                        data : series.slice(20, 30)
+                        data : payload.series.slice(20, 30)
                     },
                     {
-                        data : series.slice(30, 40)
+                        data : payload.series.slice(30, 40)
                     },
                 ]
             }
