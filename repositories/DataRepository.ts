@@ -31,6 +31,7 @@ export default class DataRepository {
                 "Content-Type" : "application/json"
             }
         })
+        
         console.log('Get ubidots response: ', res.data)
         return res.data.results
     }

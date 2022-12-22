@@ -140,12 +140,28 @@ export const getUbidotsData = createAsyncThunk(
         const ubidotsData =  await dataRepo.GetUbidotsData()
         const optionCategories = ubidotsData.map((data: any) => {
             const data_date = new Date(data.created_at)
-            return `${data_date.getMonth()+1}-${data_date.getDate()}-${data_date.getFullYear()}`;
+            return `${data_date.getMonth()+1}-${data_date.getDay()}-${data_date.getFullYear()}`;
         })
-        const series = ubidotsData.map((data: any) => {
+        const formattedSeries: any = {
+            ripening : [],
+            reproductive : [],
+            vegetative : []
+        }
+        ubidotsData.map((data: any) => {
+            if (data.value <= 55) {
+                formattedSeries.ripening.push(data.value)
+            }
+            else if (data.value <= 75) {
+                formattedSeries.reproductive.push(data.value)
+            }
+            else if (data.value <= 100) {
+                formattedSeries.vegetative.push(data.value)
+            }
+        }) 
+        const dataSeries = ubidotsData.map((data: any) => {
             return data.value
         })
-        return { optionCategories, series }
+        return { optionCategories, formattedSeries, dataSeries }
     }
 )
 
@@ -235,12 +251,29 @@ const dataSlice = createSlice({
                 dataLoading : false, 
                 ubidotsData : payload,
                 moistureOptions : {
-                    labels: ["Ripening", "Reproductive", "Vegetative"],
+                    plotOptions: {
+                        bar: {
+                            horizontal: true,
+                        },
+                    },
                     chart: {
                         id: "customBarChart",
+                        stacked: true,
                     },
                     xaxis: {
-                        categories : payload.optionCategories.slice(0, 5)
+                        categories: payload.dataSeries.slice(0, 30)
+                    },
+                    yaxis: {
+                        show: false,
+                        labels: {
+                            show: false
+                        },
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false
+                        }
                     },
                     stroke: {
                         show: true,
@@ -252,26 +285,36 @@ const dataSlice = createSlice({
                 },
                 moistureSeries : [
                     {
-                        data : payload.series.slice(0, 4)
+                        name : 'Ripening',
+                        data : payload.formattedSeries.ripening.slice(0, 10)
                     },
                     {
-                        data : payload.series.slice(4, 8)
+                        name : 'Reproductive',
+                        data : payload.formattedSeries.reproductive.slice(10, 20)
                     },
                     {
-                        data : payload.series.slice(8, 12)
-                    },
-                    {
-                        data : payload.series.slice(12, 15)
+                        name : 'Vegetative',
+                        data : payload.formattedSeries.vegetative.slice(20, 30)
                     },
                 ],
                 heatOptions : {
-                    labels: ["Ripening", "Reproductive", "Vegetative"],
+                    dataLabels: {
+                        enabled: false
+                    },
                     chart: {
                         id: "customAreaChart"
                     },
                     xaxis: {
-                        type: 'category',
-                        categories: payload.optionCategories.slice(0, 5)
+                        show : false,
+                        labels: {
+                            show: false
+                        },
+                        axisBorder: {
+                            show: false
+                        },
+                        axisTicks: {
+                            show: false
+                        }
                     },
                     stroke: {
                         show: true,
@@ -283,16 +326,16 @@ const dataSlice = createSlice({
                 },
                 heatSeries : [
                     {
-                        data : payload.series.slice(0, 10)
+                        name : 'Ripening',
+                        data : payload.formattedSeries.ripening.slice(0, 10)
                     },
                     {
-                        data : payload.series.slice(10, 20)
+                        name : 'Reproductive',
+                        data : payload.formattedSeries.reproductive.slice(10, 20)
                     },
                     {
-                        data : payload.series.slice(20, 30)
-                    },
-                    {
-                        data : payload.series.slice(30, 40)
+                        name : 'Vegetative',
+                        data : payload.formattedSeries.vegetative.slice(20, 30)
                     },
                 ]
             }
