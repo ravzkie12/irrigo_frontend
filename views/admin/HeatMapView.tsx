@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUbidotsData } from "../../redux/dataSlice";
-import HeatMapChat from "../../components/admin/HeatMapChat";
+import HeatMapChart from "../../components/admin/HeatMapChart";
+import HeatMap from "../../components/admin/HeatMap";
 
 const HeatMapView = () => {
 	const dispatch = useAppDispatch();
@@ -14,28 +15,8 @@ const HeatMapView = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col gap-y-5">
-			<div className="w-full bg-white font-noto flex flex-col gap-y-5 text-gray-700 p-5 shadow border-b border-gray-200 rounded-lg hover:cursor-pointer">
-				<img
-					src="/images/irrigation_site.png"
-					className="w-full max-h-full pointer-events-none"
-				/>
-				<div className="flex gap-x-5">
-					<div className="flex gap-x-1 items-center">
-						<h4 className="text-base font-bold hover:cursor-default">
-							Latitude:{" "}
-						</h4>
-						<p className="text-sm font-light hover:cursor-default">7.3209</p>
-					</div>
-					{/*  */}
-					<div className="flex gap-x-1 items-center">
-						<h4 className="text-base font-bold hover:cursor-default">
-							Longitude:{" "}
-						</h4>
-						<p className="text-sm font-light hover:cursor-default">125.6736</p>
-					</div>
-				</div>
-			</div>
+		<div className="h-screen flex flex-col gap-y-5">
+			<HeatMap />
 			<div className="w-full bg-white font-noto flex flex-col gap-y-5 text-gray-700 p-5 shadow border-b border-gray-200 rounded-lg">
 				{/*  */}
 				<h4 className="text-xl font-bold">Heat Map</h4>
@@ -43,7 +24,7 @@ const HeatMapView = () => {
 				<div className="w-full border-b border-gray-200 -mt-3"></div>
 				{/*  */}
 				<div className="w-full h-96">
-					<HeatMapChat
+					<HeatMapChart
 						heatOptions={heatOptions}
 						heatSeries={heatSeries}
 					/>
