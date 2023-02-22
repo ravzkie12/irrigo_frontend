@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import DataRepository from '../repositories/DataRepository'
+import moment from "moment";
 
 interface Step1DataShape {
     rsbsaFirstName: string;
@@ -161,7 +162,10 @@ export const getUbidotsData = createAsyncThunk(
         const dataSeries = ubidotsData.map((data: any) => {
             return data.value
         })
-        return { optionCategories, formattedSeries, dataSeries }
+        const dateTimeSeries = ubidotsData.map((data: any) => {
+            return data.created_at
+        })
+        return { optionCategories, formattedSeries, dataSeries, dateTimeSeries }
     }
 )
 
@@ -275,6 +279,21 @@ const dataSlice = createSlice({
                             show: false
                         }
                     },
+                    tooltip: {
+                        custom: ({ series, seriesIndex, dataPointIndex }: any) => {
+                            return (
+                                `
+                                <div style={{
+                                    padding: '5px',
+                                }}>
+                                <div>Value: ${series[seriesIndex][dataPointIndex]}</div>
+                                <div>Date: ${moment(payload.dateTimeSeries[dataPointIndex]).format("MMMM DD YYYY")}</div>
+                                <div>Time: ${moment(payload.dateTimeSeries[dataPointIndex]).format("h:mm a")}</div>
+                                </div>
+                                `
+                            )
+                        },
+                    },
                     stroke: {
                         show: true,
                         width: 5,
@@ -315,6 +334,21 @@ const dataSlice = createSlice({
                         axisTicks: {
                             show: false
                         }
+                    },
+                    tooltip: {
+                        custom: ({ series, seriesIndex, dataPointIndex }: any) => {
+                            return (
+                                `
+                                <div style={{
+                                    padding: '5px',
+                                }}>
+                                <div>Value: ${series[seriesIndex][dataPointIndex]}</div>
+                                <div>Date: ${moment(payload.dateTimeSeries[dataPointIndex]).format("MMMM DD YYYY")}</div>
+                                <div>Time: ${moment(payload.dateTimeSeries[dataPointIndex]).format("h:mm a")}</div>
+                                </div>
+                                `
+                            )
+                        },
                     },
                     stroke: {
                         show: true,

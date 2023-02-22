@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 
-const coordinates: any = [7.3209, 125.6736];
+const coordinates: any = [7.3137, 125.6711];
 
 const HeatMap = () => {
 	return (
