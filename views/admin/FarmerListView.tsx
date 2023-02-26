@@ -248,7 +248,7 @@ const FarmerListView = () => {
 					{/* 4ps Beneficiary */}
 					<div className="flex flex-col gap-y-1">
 						<h4 className="text-sm font-medium tracking-wider">
-							4P's Beneficiary
+							4P&apos;s Beneficiary
 						</h4>
 						<p className="text-sm text-gray-500">
 							{selectedFarmer?.is_4ps_beneficiary === 0 ? "Yes" : "No"}

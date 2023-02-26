@@ -31,11 +31,19 @@ export default class DataRepository {
                 "Content-Type" : "application/json"
             }
         })
-        console.log('Get ubidots response: ', res.data)
         return res.data.results
     }
     async GetUbidotsCoordinates() {
         const res = await ubidotsConn.get("api/v2.0/devices/", {
+            headers : {
+                "X-Auth-Token" : "BBFF-8NItwNjshzD2vNvtpTxIAy5ISWNGaR", 
+                "Content-Type" : "application/json"
+            }
+        })
+        return res.data.results
+    }
+    async GetDataLogs() {
+        const res = await ubidotsConn.get("api/v1.6/variables/63f5813bd8ab69000c32123b/values", {
             headers : {
                 "X-Auth-Token" : "BBFF-KUYJurI4HhBGeERrJX7d1wv8CrCdA7", 
                 "Content-Type" : "application/json"

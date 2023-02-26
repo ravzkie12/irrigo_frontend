@@ -36,6 +36,8 @@ interface DataShape {
     moistureSeries: any;
     heatOptions: any;
     heatSeries: any;
+    ubidotsCoordinates: any;
+    dataLogs: any;
 }
 
 interface OptionShape {
@@ -74,7 +76,9 @@ const initialState: DataShape = {
     moistureOptions : {},
     moistureSeries : [],
     heatOptions : {},
-    heatSeries : []
+    heatSeries : [],
+    ubidotsCoordinates : {},
+    dataLogs : []
 }
 
 
@@ -134,6 +138,7 @@ export const deleteAccount = createAsyncThunk(
     }
 )
 
+// UBIDOTS THUNKS
 export const getUbidotsData = createAsyncThunk(
     'data/getUbidotsData',
     async () => {
@@ -166,6 +171,22 @@ export const getUbidotsData = createAsyncThunk(
             return data.created_at
         })
         return { optionCategories, formattedSeries, dataSeries, dateTimeSeries }
+    }
+)
+
+export const getUbidotsCoordinates = createAsyncThunk(
+    'data/getUbidotsCoordinates',
+    async () => {
+        const dataRepo = new DataRepository()
+        return await dataRepo.GetUbidotsCoordinates()
+    }
+)
+
+export const getDataLogs = createAsyncThunk(
+    'data/getDataLogs',
+    async () => {
+        const dataRepo = new DataRepository()
+        return await dataRepo.GetDataLogs()
     }
 )
 
@@ -375,6 +396,26 @@ const dataSlice = createSlice({
             }
         })
         builder.addCase(getUbidotsData.rejected, (state) => {
+            return { ...state, dataLoading : false  }
+        })
+        builder.addCase(getUbidotsCoordinates.pending, (state) => {
+            return { ...state, dataLoading : true  }
+        })
+        builder.addCase(getUbidotsCoordinates.fulfilled, (state, action: PayloadAction<any>) => {
+            const { payload } = action
+            return { ...state, dataLoading : false, ubidotsCoordinates : payload[0].properties._location_fixed  }
+        })
+        builder.addCase(getUbidotsCoordinates.rejected, (state) => {
+            return { ...state, dataLoading : false  }
+        })
+        builder.addCase(getDataLogs.pending, (state) => {
+            return { ...state, dataLoading : true  }
+        })
+        builder.addCase(getDataLogs.fulfilled, (state, action: PayloadAction<any>) => {
+            const { payload } = action
+            return { ...state, dataLoading : false, dataLogs: action.payload  }
+        })
+        builder.addCase(getDataLogs.rejected, (state) => {
             return { ...state, dataLoading : false  }
         })
     }

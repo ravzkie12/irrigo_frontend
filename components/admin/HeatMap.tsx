@@ -1,32 +1,47 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { getUbidotsCoordinates } from "../../redux/dataSlice";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
-
-const coordinates: any = [7.3137, 125.6711];
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 const HeatMap = () => {
+	const dispatch = useAppDispatch();
+	const { dataLoading } = useAppSelector((state) => state.dataState);
+	const [coordinates, setCoordinates] = useState<any>([7.3137, 125.6711]);
+	// 7.3137, 125.6711
+
+	useEffect(() => {
+		dispatch(getUbidotsCoordinates()).then((res: any) => {
+			let coords = res.payload[0].properties._location_fixed;
+			console.log("Response coords: ", coords);
+			setCoordinates(Object.values(coords));
+			console.log("New coords: ", coordinates);
+		});
+	}, []);
+
 	return (
 		<div className="w-full h-96 bg-white font-noto flex flex-col gap-y-5 text-gray-700 p-5 shadow border-b border-gray-200 rounded-lg overflow-hidden">
-			<MapContainer
-				center={coordinates}
-				zoom={12}
-				scrollWheelZoom={false}
-				style={{
-					height: "100%",
-					width: "100vw",
-				}}
-			>
-				<TileLayer
-					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-				/>
-				<Marker
-					position={coordinates}
-					icon={L.divIcon({
-						iconSize: [30, 30],
-						iconAnchor: [30 / 2, 30 + 9],
-						html: `
+			{!dataLoading && (
+				<MapContainer
+					center={coordinates}
+					zoom={12}
+					scrollWheelZoom={false}
+					style={{
+						height: "100%",
+						width: "100vw",
+					}}
+				>
+					<TileLayer
+						attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+					<Marker
+						position={coordinates}
+						icon={L.divIcon({
+							iconSize: [30, 30],
+							iconAnchor: [30 / 2, 30 + 9],
+							html: `
                         <svg 
                             xmlns="http://www.w3.org/2000/svg"
                             preserveAspectRatio="xMidYMid meet" 
@@ -37,11 +52,12 @@ const HeatMap = () => {
                             />
                         </svg>
                         `,
-					})}
-				>
-					<Popup>This is a popup!</Popup>
-				</Marker>
-			</MapContainer>
+						})}
+					>
+						<Popup>This is a popup!</Popup>
+					</Marker>
+				</MapContainer>
+			)}
 		</div>
 	);
 };

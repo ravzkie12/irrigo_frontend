@@ -167,19 +167,43 @@ const AdminSideNav = () => {
 				</p>
 			</div>
 			{/*  */}
-			{/* <div className="w-full flex items-center gap-x-5 text-gray-700 px-5 py-3 rounded-lg">
-                <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    fill="none" 
-                    viewBox="0 0 24 24" 
-                    strokeWidth={1.5} 
-                    stroke="currentColor" 
-                    className="w-6 h-6"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
-                </svg>
-                <p className="font-medium">Reports</p>
-            </div> */}
+			<div
+				className={`w-full flex items-center gap-x-5 px-5 py-3 ${
+					router.pathname === "/admin/data_logs"
+						? "bg-[#EEEEEE]"
+						: "bg-transparent"
+				} rounded-lg hover:cursor-pointer`}
+				onClick={() => isItemClicked("/admin/data_logs")}
+			>
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					fill="none"
+					viewBox="0 0 24 24"
+					strokeWidth={1.5}
+					stroke="currentColor"
+					className={`w-6 h-6 ${
+						router.pathname === "/admin/data_logs"
+							? "text-[#89644e]"
+							: "text-gray-700"
+					}`}
+				>
+					<path
+						strokeLinecap="round"
+						strokeLinejoin="round"
+						d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
+					/>
+				</svg>
+
+				<p
+					className={`font-medium ${
+						router.pathname === "/admin/data_logs"
+							? "text-[#89644e]"
+							: "text-gray-700"
+					}`}
+				>
+					Data Logs
+				</p>
+			</div>
 			{/*  */}
 		</div>
 	);
