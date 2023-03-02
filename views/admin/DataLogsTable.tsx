@@ -1,7 +1,6 @@
 import moment from "moment";
 
 const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
-	console.log("Data: ", dataLogsList);
 	return (
 		<div className="w-full overflow-x-auto flex justify-center">
 			<table className="w-full md:w-3/5 table-auto">
