@@ -32,9 +32,7 @@ interface DataShape {
     ownershipDocument: string;
     signature: string;
     ubidotsData: any;
-    moistureOptions: any;
     moistureSeries: any;
-    heatOptions: any;
     heatSeries: any;
     ubidotsCoordinates: any;
     dataLogs: any;
@@ -73,9 +71,7 @@ const initialState: DataShape = {
     ownershipDocument : "",
     signature : "",
     ubidotsData : [],
-    moistureOptions : {},
     moistureSeries : [],
-    heatOptions : {},
     heatSeries : [],
     ubidotsCoordinates : {},
     dataLogs : []
@@ -269,130 +265,26 @@ const dataSlice = createSlice({
             return { ...state, dataLoading : true  }
         })
         builder.addCase(getUbidotsData.fulfilled, (state, action) => {
-            const { payload }: any = action
+            const { payload }: any = action 
+
+            const ripening = payload.formattedSeries.ripening.slice(0, 10).map((data: any) => {
+                return { ripening : data }
+            })
+
+            const reproductive = payload.formattedSeries.reproductive.slice(10, 20).map((data: any) => {
+                return { reproductive : data }
+            });
             
+            const vegetative = payload.formattedSeries.vegetative.slice(20, 30).map((data: any) => {
+                return { vegetative : data }
+            })
+
             return { 
                 ...state, 
                 dataLoading : false, 
                 ubidotsData : payload,
-                moistureOptions : {
-                    plotOptions: {
-                        bar: {
-                            horizontal: true,
-                        },
-                    },
-                    chart: {
-                        id: "customBarChart",
-                        stacked: true,
-                    },
-                    xaxis: {
-                        categories: payload.dataSeries.slice(0, 30)
-                    },
-                    yaxis: {
-                        show: false,
-                        labels: {
-                            show: false
-                        },
-                        axisBorder: {
-                            show: false
-                        },
-                        axisTicks: {
-                            show: false
-                        }
-                    },
-                    tooltip: {
-                        custom: ({ series, seriesIndex, dataPointIndex }: any) => {
-                            return (
-                                `
-                                <div style={{
-                                    padding: '5px',
-                                }}>
-                                <div>Value: ${series[seriesIndex][dataPointIndex]}</div>
-                                <div>Date: ${moment(payload.dateTimeSeries[dataPointIndex]).format("MMMM DD YYYY")}</div>
-                                <div>Time: ${moment(payload.dateTimeSeries[dataPointIndex]).format("h:mm a")}</div>
-                                </div>
-                                `
-                            )
-                        },
-                    },
-                    stroke: {
-                        show: true,
-                        width: 5,
-                    },
-                    fill: {
-                        opacity: 0.5,
-                    },
-                },
-                moistureSeries : [
-                    {
-                        name : 'Ripening',
-                        data : payload.formattedSeries.ripening.slice(0, 10)
-                    },
-                    {
-                        name : 'Reproductive',
-                        data : payload.formattedSeries.reproductive.slice(10, 20)
-                    },
-                    {
-                        name : 'Vegetative',
-                        data : payload.formattedSeries.vegetative.slice(20, 30)
-                    },
-                ],
-                heatOptions : {
-                    dataLabels: {
-                        enabled: false
-                    },
-                    chart: {
-                        id: "customAreaChart"
-                    },
-                    xaxis: {
-                        show : false,
-                        labels: {
-                            show: false
-                        },
-                        axisBorder: {
-                            show: false
-                        },
-                        axisTicks: {
-                            show: false
-                        }
-                    },
-                    tooltip: {
-                        custom: ({ series, seriesIndex, dataPointIndex }: any) => {
-                            return (
-                                `
-                                <div style={{
-                                    padding: '5px',
-                                }}>
-                                <div>Value: ${series[seriesIndex][dataPointIndex]}</div>
-                                <div>Date: ${moment(payload.dateTimeSeries[dataPointIndex]).format("MMMM DD YYYY")}</div>
-                                <div>Time: ${moment(payload.dateTimeSeries[dataPointIndex]).format("h:mm a")}</div>
-                                </div>
-                                `
-                            )
-                        },
-                    },
-                    stroke: {
-                        show: true,
-                        width: 5,
-                    },
-                    fill: {
-                        opacity: 0.5,
-                    },
-                },
-                heatSeries : [
-                    {
-                        name : 'Ripening',
-                        data : payload.formattedSeries.ripening.slice(0, 10)
-                    },
-                    {
-                        name : 'Reproductive',
-                        data : payload.formattedSeries.reproductive.slice(10, 20)
-                    },
-                    {
-                        name : 'Vegetative',
-                        data : payload.formattedSeries.vegetative.slice(20, 30)
-                    },
-                ]
+                moistureSeries : [...ripening, ...reproductive, ...vegetative],
+                heatSeries : [...ripening, ...reproductive, ...vegetative]
             }
         })
         builder.addCase(getUbidotsData.rejected, (state) => {

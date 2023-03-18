@@ -3,11 +3,21 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getUbidotsData } from "../../redux/dataSlice";
 import MoistureChart from "../../components/admin/MoistureChart";
 
+// BLUE/RIPENING
+// Fill - #008ffb80
+// Stroke - #008ffb
+
+// GREEN/REPRODUCTIVE
+// Fill - #00ff9680
+// Stroke - #00ff96
+
+// YELLOW/VEGETATIVE:
+// Fill - #feb01980
+// Stroke - #feb019
+
 const MoistureView = () => {
 	const dispatch = useAppDispatch();
-	const { moistureOptions, moistureSeries } = useAppSelector(
-		(state) => state.dataState
-	);
+	const { moistureSeries } = useAppSelector((state) => state.dataState);
 
 	const [firstLoad, setFirstLoad] = useState(false);
 
@@ -23,11 +33,7 @@ const MoistureView = () => {
 			<div className="w-full border-b border-gray-200 -mt-3"></div>
 			{/*  */}
 			<div className="w-full h-96">
-				<MoistureChart
-					moistureOptions={moistureOptions}
-					moistureSeries={moistureSeries}
-					isFistLoad={firstLoad}
-				/>
+				<MoistureChart moistureSeries={moistureSeries} />
 			</div>
 		</div>
 	);

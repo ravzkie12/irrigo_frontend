@@ -65,7 +65,7 @@ const CustomScatterChart = ({ dataLogs }: { dataLogs: any }) => {
 				<Tooltip content={<CustomToolTip />} />
 				<Scatter
 					dataKey="value"
-					fill="#4c1d95"
+					fill="#89644e"
 				/>
 			</ScatterChart>
 		</ResponsiveContainer>
