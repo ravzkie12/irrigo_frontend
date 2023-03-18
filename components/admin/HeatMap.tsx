@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer, Circle } from "react-leaflet";
 import L from "leaflet";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { ExportToCsv } from "export-to-csv";
 
 // BLUE/RIPENING
 // Fill - #008ffb80
@@ -19,7 +20,9 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 const HeatMap = () => {
 	const dispatch = useAppDispatch();
-	const { dataLoading } = useAppSelector((state) => state.dataState);
+	const { dataLoading, heatSeries } = useAppSelector(
+		(state) => state.dataState
+	);
 	const [coordinates, setCoordinates] = useState<any>([7.3137, 125.6711]);
 	// 7.3137, 125.6711
 	const [circleData, setCircleData] = useState<any>([]);
@@ -68,10 +71,47 @@ const HeatMap = () => {
 		});
 	}, []);
 
+	const onExportData = () => {
+		const csvHeatData = heatSeries.map((data: any) => {
+			return {
+				type: Object.keys(data)[0],
+				value: Object.values(data)[0],
+			};
+		});
+		const options = {
+			useKeysAsHeaders: true,
+			filename: "Heat Map",
+		};
+		const csvExporter = new ExportToCsv(options);
+		csvHeatData.length > 0 ? csvExporter.generateCsv(csvHeatData) : null;
+	};
+
 	return (
 		<div className="w-full h-screen bg-white font-noto flex flex-col gap-y-5 text-gray-700 p-5 shadow border-b border-gray-200 rounded-lg overflow-hidden">
 			{/*  */}
-			<h4 className="text-xl font-bold">Heat Map</h4>
+			<div className="w-full flex justify-between">
+				<h4 className="text-xl font-bold">Heat Map</h4>
+				<button
+					className="bg-transparent text-[#89644e]"
+					title="Export Excel"
+					onClick={onExportData}
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="w-6 h-6"
+					>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+						/>
+					</svg>
+				</button>
+			</div>
 			{/*  */}
 			<div className="w-full border-b border-gray-200 -mt-3"></div>
 			{/*  */}

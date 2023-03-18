@@ -157,7 +157,9 @@ const FarmerListView = () => {
 			filename: "Farmers List",
 		};
 		const csvExporter = new ExportToCsv(options);
-		csvExporter.generateCsv(finalCSVFarmers);
+		finalCSVFarmers.length > 0
+			? csvExporter.generateCsv(finalCSVFarmers)
+			: null;
 	};
 
 	return (
