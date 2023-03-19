@@ -80,6 +80,9 @@ function CustomToolTip({ active, payload, label }: any) {
 					Date: <span className="font-thin">{label ?? ""}</span>
 				</h4>
 				<h4 className="capitalize font-bold">
+					Time: <span className="font-thin">{payload[0].payload.time}</span>
+				</h4>
+				<h4 className="capitalize font-bold">
 					Value:
 					<span className="font-thin">
 						{payload[0]?.payload ? payload[0]?.payload.value : ""}

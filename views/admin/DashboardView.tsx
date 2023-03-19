@@ -28,7 +28,8 @@ const DasboardView = () => {
 	const formattedDataLogs = dataLogs.map((log: any) => {
 		return {
 			value: log.value,
-			date: moment(log.timestamp).format("MMM DD YY"),
+			date: moment(log.timestamp).format("LL"),
+			time: moment(log.timestamp).format("hh:mm A"),
 		};
 	});
 

@@ -5,6 +5,7 @@ import { MapContainer, Marker, Popup, TileLayer, Circle } from "react-leaflet";
 import L from "leaflet";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { ExportToCsv } from "export-to-csv";
+import moment from "moment";
 
 // BLUE/RIPENING
 // Fill - #008ffb80
@@ -47,21 +48,29 @@ const HeatMap = () => {
 
 	useEffect(() => {
 		dispatch(getUbidotsData()).then((res: any) => {
-			const { formattedSeries } = res.payload;
-			const heatSeries = [
+			const { formattedSeries, dateTimeSeries } = res.payload;
+			const series = [
 				...formattedSeries.ripening,
 				...formattedSeries.reproductive,
 				...formattedSeries.vegetative,
 			];
-			const data = heatSeries.map((data: any) => {
+			const seriesWithDateTime = series.map((data: any, index) => {
+				return {
+					value: data,
+					date: moment(dateTimeSeries[index]).format("LL"),
+					time: moment(dateTimeSeries[index]).format("hh:mm A"),
+				};
+			});
+			const data = seriesWithDateTime.map((data: any) => {
 				return {
 					lat: 0.3 + Math.random() * 0.09,
 					long: 0.6 + Math.random() * 0.09,
-					value: data,
+					value: data.value,
+					date: data.date,
+					time: data.time,
 				};
 			});
 			setCircleData(data);
-			console.log("Circle Data: ", data);
 		});
 		dispatch(getUbidotsCoordinates()).then((res: any) => {
 			let coords = res.payload[0].properties._location_fixed;
@@ -162,7 +171,19 @@ const HeatMap = () => {
 									radius={600}
 									pathOptions={{ color: `${color.stroke}`, weight: 0.3 }}
 									fillColor={`${color.fill}`}
-								/>
+								>
+									<Popup>
+										<h4 className="font-light text-sm">
+											Date: <span className="font-bold">{data.date}</span>
+										</h4>{" "}
+										<h4 className="font-light text-sm">
+											Time: <span className="font-bold">{data.time}</span>
+										</h4>
+										<h4 className="font-light text-sm">
+											Value: <span className="font-bold">{data.value}</span>
+										</h4>
+									</Popup>
+								</Circle>
 							);
 						})}
 				</MapContainer>

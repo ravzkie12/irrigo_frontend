@@ -22,10 +22,10 @@ const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
 									{dataLog.value}
 								</td>
 								<td className="py-3 px-6 text-left whitespace-nowrap">
-									{moment(dataLog).format("LL")}
+									{moment(dataLog.timestamp).format("LL")}
 								</td>
 								<td className="py-3 px-6 text-left whitespace-nowrap">
-									{moment(dataLog).format("hh:mm A")}
+									{moment(dataLog.timestamp).format("hh:mm A")}
 								</td>
 							</tr>
 						);
