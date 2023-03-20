@@ -162,15 +162,15 @@ const HeatMap = () => {
 						circleData.length > 0 &&
 						circleData.map((data: any, index: number) => {
 							const color = getCircleColor(data.value);
-							const lat = 7 + data.lat;
-							const long = 125 + data.long;
+							// const lat = 7 + data.lat;
+							// const long = 125 + data.long;
 							return (
 								<Circle
 									key={index}
-									center={[lat, long]}
-									radius={600}
+									center={[7.3137, 125.6711]}
+									radius={color.stroke === "#feb019" ? 100 : 60}
 									pathOptions={{ color: `${color.stroke}`, weight: 0.3 }}
-									fillColor={`${color.fill}`}
+									fillColor={`${color.stroke}`}
 								>
 									<Popup>
 										<h4 className="font-light text-sm">
