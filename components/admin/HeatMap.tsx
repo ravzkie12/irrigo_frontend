@@ -127,7 +127,7 @@ const HeatMap = () => {
 			{!dataLoading && (
 				<MapContainer
 					center={coordinates}
-					zoom={12}
+					zoom={18}
 					scrollWheelZoom={false}
 					style={{
 						height: "100%",
