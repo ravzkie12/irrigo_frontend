@@ -192,7 +192,7 @@ const HeatMap = () => {
 									// 7.3137, 125.6711
 									center={[data.lat, data.long]}
 									radius={5}
-									pathOptions={{ color: "transparent", weight: 5 }}
+									pathOptions={{ color: data.color, weight: 20 }}
 									fillColor={data.color}
 								>
 									<Popup>
@@ -213,17 +213,17 @@ const HeatMap = () => {
 			)}
 			<div className="w-full flex justify-center gap-x-5">
 				<div className="flex gap-x-1">
-					<div className="bg-[#008ffb80] border-[0.5px] border-[#008ffb] rounded-full w-5 h-5"></div>
+					<div className="bg-[#008ffb] rounded-full w-5 h-5"></div>
 					<p className="text-xs font-light text-[#008ffb]">ripening</p>
 				</div>
 				{/*  */}
 				<div className="flex gap-x-1">
-					<div className="bg-[#00ff9680] border-[0.5px] border-[#00ff96] rounded-full w-5 h-5"></div>
+					<div className="bg-[#00ff96] rounded-full w-5 h-5"></div>
 					<p className="text-xs font-light text-[#00ff96]">reproductive</p>
 				</div>
 				{/*  */}
 				<div className="flex gap-x-1">
-					<div className="bg-[#feb01980] border-[0.5px] border-[#feb019] rounded-full w-5 h-5"></div>
+					<div className="bg-[#feb019] rounded-full w-5 h-5"></div>
 					<p className="text-xs font-light text-[#feb019]">vegetative</p>
 				</div>
 				{/*  */}
