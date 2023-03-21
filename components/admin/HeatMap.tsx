@@ -6,6 +6,7 @@ import L from "leaflet";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { ExportToCsv } from "export-to-csv";
 import moment from "moment";
+import KMeans from "../../clusterHelper";
 
 // BLUE/RIPENING
 // Fill - #008ffb80
@@ -38,12 +39,27 @@ const HeatMap = () => {
 			color.stroke = "#008ffb";
 		} else if (value <= 75) {
 			color.fill = "#00ff9680";
-			color.stroke = "#00ff9680";
+			color.stroke = "#00ff96";
 		} else if (value <= 100) {
 			color.fill = "#feb01980";
 			color.stroke = "#feb019";
 		}
 		return color;
+	};
+
+	const getCoordinates = (value: number) => {
+		let coordinates: { lat: number; long: number } = {
+			lat: 0,
+			long: 0,
+		};
+		if (value <= 55) {
+			coordinates = { lat: 7.3137, long: 125.6711 };
+		} else if (value <= 75) {
+			coordinates = { lat: 7.3135, long: 125.6709 };
+		} else if (value <= 100) {
+			coordinates = { lat: 7.3132, long: 125.6705 };
+		}
+		return coordinates;
 	};
 
 	useEffect(() => {
@@ -62,20 +78,27 @@ const HeatMap = () => {
 				};
 			});
 			const data = seriesWithDateTime.map((data: any) => {
+				const coordinates = getCoordinates(data.value);
 				return {
-					lat: 0.3 + Math.random() * 0.09,
-					long: 0.6 + Math.random() * 0.09,
+					// lat: 0.313 + Math.random() * 0.0009,
+					// long: 0.671 + Math.random() * 0.0009,
+					lat: coordinates.lat,
+					long: coordinates.long,
 					value: data.value,
 					date: data.date,
 					time: data.time,
 				};
 			});
-			setCircleData(data);
+			const k = 3;
+			const kmeans = new KMeans(data, k);
+			const clusteredData = kmeans.assignClusters();
+			console.log("Clustered data: ", clusteredData);
+			setCircleData(clusteredData);
 		});
 		dispatch(getUbidotsCoordinates()).then((res: any) => {
 			let coords = res.payload[0].properties._location_fixed;
 			console.log("Response coords: ", coords);
-			setCoordinates(Object.values(coords));
+			// setCoordinates(Object.values(coords));
 			console.log("New coords: ", coordinates);
 		});
 	}, []);
@@ -161,16 +184,16 @@ const HeatMap = () => {
 					{!dataLoading &&
 						circleData.length > 0 &&
 						circleData.map((data: any, index: number) => {
-							const color = getCircleColor(data.value);
 							// const lat = 7 + data.lat;
 							// const long = 125 + data.long;
 							return (
 								<Circle
 									key={index}
-									center={[7.3137, 125.6711]}
-									radius={color.stroke === "#feb019" ? 100 : 60}
-									pathOptions={{ color: `${color.stroke}`, weight: 0.3 }}
-									fillColor={`${color.stroke}`}
+									// 7.3137, 125.6711
+									center={[data.lat, data.long]}
+									radius={5}
+									pathOptions={{ color: "transparent", weight: 5 }}
+									fillColor={data.color}
 								>
 									<Popup>
 										<h4 className="font-light text-sm">
