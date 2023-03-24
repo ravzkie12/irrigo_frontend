@@ -1,6 +1,7 @@
 import { backendConn, ubidotsConn } from "./connection";
 
 export default class DataRepository {
+    // Accounts
     async GetFarmersList(): Promise<any> {
         const farmerListRes = await backendConn.get('account_list/', {
             headers : { Authorization : `Bearer ${localStorage.getItem("jwt_token")}` }
@@ -24,6 +25,13 @@ export default class DataRepository {
         console.log('Delete account res:', res)
         return res.data
     }
+    async LivelihoodSummary () {
+        const res = await backendConn.get(`livelihoods_summary/`, {
+            headers : { Authorization : `Bearer ${localStorage.getItem("jwt_token")}` }
+        })
+        return JSON.parse(res.data)
+    }
+    // Ubidots
     async GetUbidotsData() {
         const res = await ubidotsConn.get("api/v1.6/variables/6418798d7a8f05000df53bcd/values", {
             headers : {

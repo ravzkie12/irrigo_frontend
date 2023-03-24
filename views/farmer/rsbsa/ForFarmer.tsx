@@ -38,7 +38,7 @@ const ForFarmer = () => {
 	return (
 		<div className="flex flex-col gap-y-5 font-noto text-gray-700">
 			<h4 className="self-center w-96 text-base font-bold">For Farmers</h4>
-			<div className="self-center w-96 flex flex-col gap-y-16">
+			<div className="grid grid-cols-3 gap-x-8">
 				<LivelihoodOption
 					selectedOption={isSelected}
 					livelihoodType="Crops"

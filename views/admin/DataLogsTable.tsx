@@ -1,6 +1,18 @@
 import moment from "moment";
 
 const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
+	const getTypeText = (dataValue: number): string => {
+		let typeText = "";
+		if (dataValue <= 55) {
+			typeText = "Ripening";
+		} else if (dataValue <= 75) {
+			typeText = "Reproductive";
+		} else if (dataValue <= 100) {
+			typeText = "Vegetative";
+		}
+		return typeText;
+	};
+
 	return (
 		<div className="w-full overflow-x-auto flex justify-center">
 			<table className="w-full md:w-3/5 table-auto">
@@ -9,6 +21,7 @@ const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
 						<th className="py-3 px-6 text-left">Value</th>
 						<th className="py-3 px-6 text-left">Date</th>
 						<th className="py-3 px-6 text-left">Time</th>
+						<th className="py-3 px-6 text-left">Type</th>
 					</tr>
 				</thead>
 				<tbody className="text-gray-600 text-sm font-light">
@@ -26,6 +39,9 @@ const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
 								</td>
 								<td className="py-3 px-6 text-left whitespace-nowrap">
 									{moment(dataLog.timestamp).format("hh:mm A")}
+								</td>
+								<td className="py-3 px-6 text-left whitespace-nowrap">
+									{getTypeText(dataLog.value)}
 								</td>
 							</tr>
 						);

@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { ExportToCsv } from "export-to-csv";
 import moment from "moment";
 import KMeans from "../../clusterHelper";
+import _ from "lodash";
 
 // BLUE/RIPENING
 // Fill - #008ffb80
@@ -92,14 +93,14 @@ const HeatMap = () => {
 			const k = 3;
 			const kmeans = new KMeans(data, k);
 			const clusteredData = kmeans.assignClusters();
-			console.log("Clustered data: ", clusteredData);
+			// console.log("Clustered data: ", clusteredData);
 			setCircleData(clusteredData);
 		});
 		dispatch(getUbidotsCoordinates()).then((res: any) => {
-			let coords = res.payload[0].properties._location_fixed;
-			console.log("Response coords: ", coords);
+			// let coords = res.payload[0].properties._location_fixed;
+			// console.log("Response coords: ", coords);
 			// setCoordinates(Object.values(coords));
-			console.log("New coords: ", coordinates);
+			// console.log("New coords: ", coordinates);
 		});
 	}, []);
 
@@ -118,31 +119,47 @@ const HeatMap = () => {
 		csvHeatData.length > 0 ? csvExporter.generateCsv(csvHeatData) : null;
 	};
 
+	const onSelectChange = () => {
+		const reversedArray = _.reverse(circleData);
+		console.log("Reversed array: ", reversedArray);
+		setCircleData(reversedArray);
+	};
+
 	return (
 		<div className="w-full h-screen bg-white font-noto flex flex-col gap-y-5 text-gray-700 p-5 shadow border-b border-gray-200 rounded-lg overflow-hidden">
 			{/*  */}
 			<div className="w-full flex justify-between">
 				<h4 className="text-xl font-bold">Heat Map</h4>
-				<button
-					className="bg-transparent text-[#89644e]"
-					title="Export Excel"
-					onClick={onExportData}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						strokeWidth={1.5}
-						stroke="currentColor"
-						className="w-6 h-6"
+				<div className="flex gap-x-5">
+					<select
+						className="appearance-none border border-gray-500 w-48 rounded-lg p-1"
+						onChange={onSelectChange}
+						defaultValue="desc"
 					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
-						/>
-					</svg>
-				</button>
+						<option value="asc">Latest</option>
+						<option value="desc">Oldest</option>
+					</select>
+					<button
+						className="bg-transparent text-[#89644e]"
+						title="Export Excel"
+						onClick={onExportData}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="w-6 h-6"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"
+							/>
+						</svg>
+					</button>
+				</div>
 			</div>
 			{/*  */}
 			<div className="w-full border-b border-gray-200 -mt-3"></div>

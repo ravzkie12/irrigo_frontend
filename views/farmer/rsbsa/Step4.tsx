@@ -15,9 +15,8 @@ import { retrieveAccount } from "../../../redux/authSlice";
 const Step4 = () => {
 	const dispatch = useAppDispatch();
 	const { userProfile } = useAppSelector((state) => state.authState);
-	const { ownershipDocumentName, signatureName } = useAppSelector(
-		(state: any) => state.dataState
-	);
+	const { ownershipDocumentName, signatureName, ownershipDocument, signature } =
+		useAppSelector((state) => state.dataState);
 
 	const [hasError, setHasError] = useState(false);
 
@@ -271,6 +270,28 @@ const Step4 = () => {
 				{hasError && (
 					<p className="mt-2 text-xs text-rose-500">Both fields are required</p>
 				)}
+				{/*  */}
+				<div className="flex flex-col gap-y-5">
+					<h4 className="mt-5 text-sm font-medium">
+						Preview (Ownership Document / Proof)
+					</h4>
+					<div className="h-96 border-2 border-dashed border-gray-400 rounded-lg overflow-hidden flex justify-center items-center">
+						<img
+							src={ownershipDocument}
+							className="h-auto max-w-full"
+						/>
+					</div>
+				</div>
+				{/*  */}
+				<div className="flex flex-col gap-y-5">
+					<h4 className="mt-5 text-sm font-medium">Preview (Signature)</h4>
+					<div className="h-96 border-2 border-dashed border-gray-400 rounded-lg overflow-hidden flex justify-center items-center">
+						<img
+							src={signature}
+							className="h-auto max-w-full"
+						/>
+					</div>
+				</div>
 			</div>
 			{/*  */}
 			<div className="mt-10 mb-5 w-full flex justify-between">

@@ -36,6 +36,7 @@ interface DataShape {
     heatSeries: any;
     ubidotsCoordinates: any;
     dataLogs: any;
+    livelihoodSummary: any;
 }
 
 interface OptionShape {
@@ -74,7 +75,8 @@ const initialState: DataShape = {
     moistureSeries : [],
     heatSeries : [],
     ubidotsCoordinates : {},
-    dataLogs : []
+    dataLogs : [],
+    livelihoodSummary : []
 }
 
 
@@ -86,6 +88,15 @@ export const getFarmers = createAsyncThunk(
         const farmersList = await dataRepo.GetFarmersList()
         const formattedFarmersList = farmersList.filter((farmer: any) => farmer.id !== 1)
         return formattedFarmersList
+    }
+)
+
+export const fetchLivelihoodSummary = createAsyncThunk(
+    "data/fetchLivelihoodSummary",
+    async () => {
+        const dataRepo = new DataRepository()
+        const livelihoods = await dataRepo.LivelihoodSummary()
+        return livelihoods.filter((livelihood: any) => livelihood.main_livelihood !== "" || livelihood.main_livelihood !== undefined)
     }
 )
 
@@ -238,6 +249,16 @@ const dataSlice = createSlice({
             return { ...state, dataLoading : false, farmersList : action.payload }
         })
         builder.addCase(getFarmers.rejected, (state) => {
+            return { ...state, dataLoading : false }
+        })
+        // FETCH LIVELIHOOD SUMMARY
+        builder.addCase(fetchLivelihoodSummary.pending, (state) => {
+            return { ...state, dataLoading : true }
+        })
+        builder.addCase(fetchLivelihoodSummary.fulfilled, (state, action) => {
+            return { ...state, dataLoading : false, livelihoodSummary : action.payload }
+        })
+        builder.addCase(fetchLivelihoodSummary.rejected, (state) => {
             return { ...state, dataLoading : false }
         })
         // UPDATE FARMER ACCOUNT

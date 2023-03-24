@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { retrieveAccount } from "../../../redux/authSlice";
+import jwt_decode from "jwt-decode";
 
 const RSBSAView = () => {
-	const { rsbsaStep } = useAppSelector((state: any) => state.dataState);
+	const { rsbsaStep } = useAppSelector((state) => state.dataState);
+	const { userProfile } = useAppSelector((state) => state.authState);
+
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		const decoded_token: any = jwt_decode(localStorage.jwt_token);
+		dispatch(retrieveAccount(decoded_token.user_id));
+	}, []);
 
 	const renderSteps = (currentStep: number) => {
 		switch (currentStep) {

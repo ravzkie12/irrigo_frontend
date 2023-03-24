@@ -8,6 +8,7 @@ import {
 	CartesianGrid,
 	Tooltip,
 	ResponsiveContainer,
+	Legend,
 } from "recharts";
 
 const CustomScatterChart = ({ dataLogs }: { dataLogs: any }) => {
@@ -61,6 +62,13 @@ const CustomScatterChart = ({ dataLogs }: { dataLogs: any }) => {
 					// 		return value.visibleTicksCount;
 					// 	}
 					// }}
+				/>
+				<Legend
+					payload={[
+						{ value: "Ripening (0-55)", type: "line", color: "#89644e" },
+						{ value: "Reproductive (56-75)", type: "line", color: "#89644e" },
+						{ value: "Vegetative (76-10)", type: "line", color: "#89644e" },
+					]}
 				/>
 				<Tooltip content={<CustomToolTip />} />
 				<Scatter
