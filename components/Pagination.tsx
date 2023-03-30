@@ -19,14 +19,12 @@ const Pagination = ({
 	const onPrev = () => {
 		if (currentPage > 1) {
 			setCurrentPage(currentPage - 1);
-			console.log("Prev current page: ", currentPage);
 		}
 	};
 
 	const onNext = () => {
 		if (currentPage < pages.length) {
 			setCurrentPage(currentPage + 1);
-			console.log("Next current page: ", currentPage);
 		}
 	};
 

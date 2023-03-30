@@ -1,7 +1,7 @@
-import HeatMap from "../../components/admin/HeatMap";
+import DataLogsView from "./DataLogsView";
 
 const HeatMapView = () => {
-	return <HeatMap />;
+	return <DataLogsView />;
 };
 
 export default HeatMapView;

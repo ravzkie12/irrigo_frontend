@@ -30,23 +30,23 @@ const HeatMap = () => {
 	// 7.3137, 125.6711
 	const [circleData, setCircleData] = useState<any>([]);
 
-	const getCircleColor = (value: number): { fill: string; stroke: string } => {
-		let color = {
-			fill: "",
-			stroke: "",
-		};
-		if (value <= 55) {
-			color.fill = "#008ffb80";
-			color.stroke = "#008ffb";
-		} else if (value <= 75) {
-			color.fill = "#00ff9680";
-			color.stroke = "#00ff96";
-		} else if (value <= 100) {
-			color.fill = "#feb01980";
-			color.stroke = "#feb019";
-		}
-		return color;
-	};
+	// const getCircleColor = (value: number): { fill: string; stroke: string } => {
+	// 	let color = {
+	// 		fill: "",
+	// 		stroke: "",
+	// 	};
+	// 	if (value <= 55) {
+	// 		color.fill = "#008ffb80";
+	// 		color.stroke = "#008ffb";
+	// 	} else if (value <= 75) {
+	// 		color.fill = "#00ff9680";
+	// 		color.stroke = "#00ff96";
+	// 	} else if (value <= 100) {
+	// 		color.fill = "#feb01980";
+	// 		color.stroke = "#feb019";
+	// 	}
+	// 	return color;
+	// };
 
 	const getCoordinates = (value: number) => {
 		let coordinates: { lat: number; long: number } = {
@@ -131,14 +131,6 @@ const HeatMap = () => {
 			<div className="w-full flex justify-between">
 				<h4 className="text-xl font-bold">Heat Map</h4>
 				<div className="flex gap-x-5">
-					<select
-						className="appearance-none border border-gray-500 w-48 rounded-lg p-1"
-						onChange={onSelectChange}
-						defaultValue="desc"
-					>
-						<option value="asc">Latest</option>
-						<option value="desc">Oldest</option>
-					</select>
 					<button
 						className="bg-transparent text-[#89644e]"
 						title="Export Excel"

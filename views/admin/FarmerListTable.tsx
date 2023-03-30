@@ -16,7 +16,7 @@ const FarmerListTable = ({
 						<th className="py-3 px-6 text-center">Actions</th>
 					</tr>
 				</thead>
-				<tbody className="text-gray-600 text-sm font-light">
+				<tbody className="text-gray-600 text-sm font-medium">
 					{farmersList.map((farmer: any) => {
 						return (
 							<tr

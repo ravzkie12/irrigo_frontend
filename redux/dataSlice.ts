@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import DataRepository from '../repositories/DataRepository'
 import moment from "moment";
+import _ from "lodash";
 
 interface Step1DataShape {
     rsbsaFirstName: string;
@@ -37,6 +38,9 @@ interface DataShape {
     ubidotsCoordinates: any;
     dataLogs: any;
     livelihoodSummary: any;
+    uniqueDatalogs: any;
+    logStartDate: any;
+    logEndDate: any;
 }
 
 interface OptionShape {
@@ -76,7 +80,10 @@ const initialState: DataShape = {
     heatSeries : [],
     ubidotsCoordinates : {},
     dataLogs : [],
-    livelihoodSummary : []
+    livelihoodSummary : [],
+    uniqueDatalogs : [],
+    logStartDate : new Date(), 
+    logEndDate : new Date(),
 }
 
 
@@ -326,7 +333,17 @@ const dataSlice = createSlice({
         })
         builder.addCase(getDataLogs.fulfilled, (state, action: PayloadAction<any>) => {
             const { payload } = action
-            return { ...state, dataLoading : false, dataLogs: action.payload  }
+            return { 
+                ...state, 
+                dataLoading : false, 
+                dataLogs: action.payload,
+                uniqueDatalogs : _.uniqBy(
+                    action.payload,
+                    (obj: any) => `${obj.value}${obj.date}`
+                ),
+                logStartDate : action.payload.length > 0 ? action.payload[action.payload.length - 1].timestamp : new Date(),
+                logEndDate : action.payload.length > 0 ? action.payload[0].timestamp : new Date(),
+            }
         })
         builder.addCase(getDataLogs.rejected, (state) => {
             return { ...state, dataLoading : false  }

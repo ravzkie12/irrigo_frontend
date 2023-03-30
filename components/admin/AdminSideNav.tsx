@@ -163,11 +163,11 @@ const AdminSideNav = () => {
 							: "text-gray-700"
 					}`}
 				>
-					Heat Map
+					Heat Logs
 				</p>
 			</div>
 			{/*  */}
-			<div
+			{/* <div
 				className={`w-full flex items-center gap-x-5 px-5 py-3 ${
 					router.pathname === "/admin/data_logs"
 						? "bg-[#EEEEEE]"
@@ -203,7 +203,7 @@ const AdminSideNav = () => {
 				>
 					Data Logs
 				</p>
-			</div>
+			</div> */}
 			{/*  */}
 		</div>
 	);

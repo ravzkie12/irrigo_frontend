@@ -41,7 +41,7 @@ const CustomScatterChart = ({ dataLogs }: { dataLogs: any }) => {
 						fontSize: "12px",
 					}}
 					tick={(value) => {
-						console.log("Tick payload: ", value);
+						// console.log("Tick payload: ", value);
 						if (value.visibleTicksCount % 1 === 0) {
 							return value.visibleTicksCount;
 						}
