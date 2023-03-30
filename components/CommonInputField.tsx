@@ -22,7 +22,7 @@ const CommonInputField = ({
 }: CommonInputFieldProps) => {
 	useEffect(() => {
 		setFieldValue ? setFieldValue(fieldName, defaultValue) : null;
-	}, []);
+	}, [defaultValue, fieldName, setFieldValue]);
 
 	return (
 		<Controller

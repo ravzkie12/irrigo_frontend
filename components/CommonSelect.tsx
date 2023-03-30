@@ -22,7 +22,7 @@ const CommonSelectField = ({
 }: CommonSelectFieldProps) => {
 	useEffect(() => {
 		setFieldValue ? setFieldValue(fieldName, defaultValue) : null;
-	}, []);
+	}, [defaultValue, fieldName, setFieldValue]);
 
 	return (
 		<Controller

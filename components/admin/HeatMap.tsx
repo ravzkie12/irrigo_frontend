@@ -96,13 +96,14 @@ const HeatMap = () => {
 			// console.log("Clustered data: ", clusteredData);
 			setCircleData(clusteredData);
 		});
-		dispatch(getUbidotsCoordinates()).then((res: any) => {
-			// let coords = res.payload[0].properties._location_fixed;
-			// console.log("Response coords: ", coords);
-			// setCoordinates(Object.values(coords));
-			// console.log("New coords: ", coordinates);
-		});
-	}, []);
+		dispatch(getUbidotsCoordinates());
+		// .then((res: any) => {
+		// 	let coords = res.payload[0].properties._location_fixed;
+		// 	console.log("Response coords: ", coords);
+		// 	setCoordinates(Object.values(coords));
+		// 	console.log("New coords: ", coordinates);
+		// });
+	}, [dispatch]);
 
 	const onExportData = () => {
 		const csvHeatData = heatSeries.map((data: any) => {
