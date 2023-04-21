@@ -33,9 +33,9 @@ export default class DataRepository {
     }
     // Ubidots
     async GetUbidotsData() {
-        const res = await ubidotsConn.get("api/v1.6/variables/6418798d7a8f05000df53bcd/values", {
+        const res = await ubidotsConn.get("api/v1.6/variables/6441f9c0d6005b000e2a8c4a/values", {
             headers : {
-                "X-Auth-Token" : "BBFF-snRFqRzDQ0V2PgLU2OrNfp28hK4ZBm", 
+                "X-Auth-Token" : "BBFF-6LulPa1RhRrhpThpalh4noXxR3nEER", 
                 "Content-Type" : "application/json"
             }
         })
@@ -51,9 +51,9 @@ export default class DataRepository {
         return res.data.results
     }
     async GetDataLogs() {
-        const res = await ubidotsConn.get("api/v1.6/variables/6418798d7a8f05000df53bcd/values", {
+        const res = await ubidotsConn.get("api/v1.6/variables/6441f9c0d6005b000e2a8c4a/values", {
             headers : {
-                "X-Auth-Token" : "BBFF-snRFqRzDQ0V2PgLU2OrNfp28hK4ZBm", 
+                "X-Auth-Token" : "BBFF-6LulPa1RhRrhpThpalh4noXxR3nEER", 
                 "Content-Type" : "application/json"
             }
         })

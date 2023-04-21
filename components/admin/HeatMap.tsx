@@ -26,7 +26,7 @@ const HeatMap = () => {
 	const { dataLoading, heatSeries } = useAppSelector(
 		(state) => state.dataState
 	);
-	const [coordinates, setCoordinates] = useState<any>([7.3137, 125.6711]);
+	const [coordinates, setCoordinates] = useState<any>([7.341, 125.6369]);
 	// 7.3137, 125.6711
 	const [circleData, setCircleData] = useState<any>([]);
 
@@ -54,11 +54,11 @@ const HeatMap = () => {
 			long: 0,
 		};
 		if (value <= 55) {
-			coordinates = { lat: 7.3137, long: 125.6711 };
+			coordinates = { lat: 7.341, long: 125.6369 };
 		} else if (value <= 75) {
-			coordinates = { lat: 7.3135, long: 125.6709 };
+			coordinates = { lat: 7.3408, long: 125.6367 };
 		} else if (value <= 100) {
-			coordinates = { lat: 7.3132, long: 125.6705 };
+			coordinates = { lat: 7.3406, long: 125.6365 };
 		}
 		return coordinates;
 	};

@@ -37,7 +37,7 @@ const DataLogsView = () => {
 	const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 	const [hasFilter, setHasFilter] = useState<boolean>(false);
 
-	const [coordinates, setCoordinates] = useState<any>([7.3137, 125.6711]);
+	const [coordinates, setCoordinates] = useState<any>([7.341, 125.6369]);
 
 	useEffect(() => {
 		dispatch(getUbidotsData());
@@ -262,7 +262,7 @@ const DataLogsView = () => {
 							<>
 								{ripeningCircleData.value ? (
 									<Circle
-										center={[7.3137, 125.6711]}
+										center={[7.341, 125.6369]}
 										radius={5}
 										pathOptions={{ color: "#008ffb", weight: 20 }}
 										fillColor="#008ffb"
@@ -293,7 +293,7 @@ const DataLogsView = () => {
 								) : null}
 								{reproductiveCircleData.value ? (
 									<Circle
-										center={[7.3135, 125.6709]}
+										center={[7.3408, 125.6367]}
 										radius={5}
 										pathOptions={{ color: "#00ff96", weight: 20 }}
 										fillColor="#00ff96"
@@ -326,7 +326,7 @@ const DataLogsView = () => {
 								) : null}
 								{vegetativeCircleData.value ? (
 									<Circle
-										center={[7.3132, 125.6705]}
+										center={[7.3406, 125.6365]}
 										radius={5}
 										pathOptions={{ color: "#feb019", weight: 20 }}
 										fillColor="#feb019"
