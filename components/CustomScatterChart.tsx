@@ -67,7 +67,7 @@ const CustomScatterChart = ({ dataLogs }: { dataLogs: any }) => {
 					payload={[
 						{ value: "Ripening (0-55)", type: "line", color: "#89644e" },
 						{ value: "Reproductive (56-75)", type: "line", color: "#89644e" },
-						{ value: "Vegetative (76-10)", type: "line", color: "#89644e" },
+						{ value: "Vegetative (76-100)", type: "line", color: "#89644e" },
 					]}
 				/>
 				<Tooltip content={<CustomToolTip />} />
