@@ -12,6 +12,18 @@ import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+const nanyoCircleCenter: any = {
+	ripening: [7.341, 125.6369],
+	reproductive: [7.3408, 125.6367],
+	vegetative: [7.3406, 125.6365],
+};
+
+const dnscCircleCenter: any = {
+	ripening: [7.3137, 125.6711],
+	reproductive: [7.3135, 125.6709],
+	vegetative: [7.3132, 125.6705],
+};
+
 const DataLogsView = () => {
 	const dispatch = useAppDispatch();
 	const { dataLoading, dataLogs, heatSeries } = useAppSelector(
@@ -37,7 +49,9 @@ const DataLogsView = () => {
 	const [showDatePicker, setShowDatePicker] = useState<boolean>(false);
 	const [hasFilter, setHasFilter] = useState<boolean>(false);
 
-	const [coordinates, setCoordinates] = useState<any>([7.341, 125.6369]);
+	const [coordinates, setCoordinates] = useState<any>(
+		dnscCircleCenter.ripening
+	);
 
 	useEffect(() => {
 		dispatch(getUbidotsData());
@@ -253,16 +267,11 @@ const DataLogsView = () => {
 						>
 							<Popup>This is a popup!</Popup>
 						</Marker>
-						{/* coordinates = { lat: 7.3137, long: 125.6711 };
-						} else if (value <= 75) {
-							coordinates = { lat: 7.3135, long: 125.6709 };
-						} else if (value <= 100) {
-							coordinates = { lat: 7.3132, long: 125.6705 }; */}
 						{!dataLoading && (
 							<>
 								{ripeningCircleData.value ? (
 									<Circle
-										center={[7.341, 125.6369]}
+										center={dnscCircleCenter.ripening}
 										radius={5}
 										pathOptions={{ color: "#008ffb", weight: 20 }}
 										fillColor="#008ffb"
@@ -293,7 +302,7 @@ const DataLogsView = () => {
 								) : null}
 								{reproductiveCircleData.value ? (
 									<Circle
-										center={[7.3408, 125.6367]}
+										center={dnscCircleCenter.reproductive}
 										radius={5}
 										pathOptions={{ color: "#00ff96", weight: 20 }}
 										fillColor="#00ff96"
@@ -326,7 +335,7 @@ const DataLogsView = () => {
 								) : null}
 								{vegetativeCircleData.value ? (
 									<Circle
-										center={[7.3406, 125.6365]}
+										center={dnscCircleCenter.vegetative}
 										radius={5}
 										pathOptions={{ color: "#feb019", weight: 20 }}
 										fillColor="#feb019"

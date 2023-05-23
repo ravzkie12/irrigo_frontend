@@ -22,6 +22,7 @@ const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
 						<th className="py-3 px-6 text-left">Date</th>
 						<th className="py-3 px-6 text-left">Time</th>
 						<th className="py-3 px-6 text-left">Type</th>
+						<th className="py-3 px-6 text-left">Coordinates</th>
 					</tr>
 				</thead>
 				<tbody className="text-gray-600 text-sm font-medium">
@@ -42,6 +43,12 @@ const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
 								</td>
 								<td className="py-3 px-6 text-left whitespace-nowrap">
 									{getTypeText(dataLog.value)}
+								</td>
+								<td className="py-3 px-6 text-left whitespace-nowrap">
+									{moment(dataLog.timestamp).format("LL") ===
+									moment(new Date()).format("LL")
+										? "7.3137, 125.6711"
+										: ""}
 								</td>
 							</tr>
 						);
