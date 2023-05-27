@@ -46,9 +46,9 @@ const DataLogsTable = ({ dataLogsList }: { dataLogsList: any }) => {
 								</td>
 								<td className="py-3 px-6 text-left whitespace-nowrap">
 									{moment(dataLog.timestamp).format("LL") ===
-									moment(new Date()).format("LL")
+									moment(new Date("May 24, 2023")).format("LL")
 										? "7.3137, 125.6711"
-										: ""}
+										: "7.3409, 125.6369"}
 								</td>
 							</tr>
 						);

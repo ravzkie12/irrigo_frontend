@@ -13,7 +13,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
 const nanyoCircleCenter: any = {
-	ripening: [7.341, 125.6369],
+	ripening: [7.3409, 125.6369],
 	reproductive: [7.3408, 125.6367],
 	vegetative: [7.3406, 125.6365],
 };
@@ -50,7 +50,7 @@ const DataLogsView = () => {
 	const [hasFilter, setHasFilter] = useState<boolean>(false);
 
 	const [coordinates, setCoordinates] = useState<any>(
-		dnscCircleCenter.ripening
+		nanyoCircleCenter.ripening
 	);
 
 	useEffect(() => {
@@ -271,7 +271,7 @@ const DataLogsView = () => {
 							<>
 								{ripeningCircleData.value ? (
 									<Circle
-										center={dnscCircleCenter.ripening}
+										center={nanyoCircleCenter.ripening}
 										radius={5}
 										pathOptions={{ color: "#008ffb", weight: 20 }}
 										fillColor="#008ffb"
@@ -302,7 +302,7 @@ const DataLogsView = () => {
 								) : null}
 								{reproductiveCircleData.value ? (
 									<Circle
-										center={dnscCircleCenter.reproductive}
+										center={nanyoCircleCenter.reproductive}
 										radius={5}
 										pathOptions={{ color: "#00ff96", weight: 20 }}
 										fillColor="#00ff96"
@@ -335,7 +335,7 @@ const DataLogsView = () => {
 								) : null}
 								{vegetativeCircleData.value ? (
 									<Circle
-										center={dnscCircleCenter.vegetative}
+										center={nanyoCircleCenter.vegetative}
 										radius={5}
 										pathOptions={{ color: "#feb019", weight: 20 }}
 										fillColor="#feb019"
